@@ -1,7 +1,7 @@
 import manhattanPark from './manhattanPark.png'
-import rooseveltIsland from './rooseveltIsland.jpeg'
-import washingtonPark from './washingtonPark.jpeg'
-import centralPark from './centralPark.jpeg'
+import rooseveltIsland from './rooseveltIsland.png'
+import washingtonPark from './washingtonPark.png'
+import centralPark from './centralPark.png'
 
 function Markets(props) {
     return(
