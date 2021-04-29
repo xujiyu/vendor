@@ -61,6 +61,7 @@ function App() {
         </section>
         {/* <Markets /> */}
         <Home />
+        <Product />
         
         <div>
         <h2 className="title">Check out our slides for details</h2>
@@ -86,7 +87,7 @@ function App() {
       
       </section>
       <Markets />
-      {/* <Product /> */}
+      <Product />
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in with email: {firebase.auth().currentUser.email}</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
     </div>

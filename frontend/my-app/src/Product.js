@@ -9,7 +9,8 @@ function Product(props) {
         const response = await fetch('<https://f8ss6kguxg.execute-api.us-east-1.amazonaws.com/dev/allProduct/>');
         const products = await response.json();
         // save it to your components state so you can use it during render
-        this.setState({products: products});
+        //this.setState({products: products});
+        console.log("wtf");
         console.log(products);
     }
     getProducts();
