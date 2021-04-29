@@ -4,6 +4,7 @@ frameworkVersion: '2'
 
 custom:
   tableName: 'users-table-${self:provider.stage}'
+  productTableName: 'product-table-${self:provider.stage}'
 
 provider:
   name: aws
@@ -23,8 +24,10 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [ UsersTable, Arn ]
+            - Fn::GetAtt: [ ProductsTable, Arn ]
   environment:
     USERS_TABLE: ${self:custom.tableName}
+    PRODUCT_TABLE: ${self:custom.productTableName}
 
 functions:
   api:
@@ -33,9 +36,11 @@ functions:
       - http:
           path: /
           method: ANY
+          cors: true
       - http:
           path: /{proxy+}
           method: ANY
+          cors: true
 
 resources:
   Resources:
@@ -52,3 +57,16 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.tableName}
+    ProductsTable:
+      Type: AWS::DynamoDB::Table 
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: productId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: productId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.productTableName}

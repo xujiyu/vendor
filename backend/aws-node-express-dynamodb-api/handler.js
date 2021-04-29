@@ -5,7 +5,9 @@ const serverless = require("serverless-http");
 const app = express();
 
 const USERS_TABLE = process.env.USERS_TABLE;
+const PRODUCT_TABLE = process.env.PRODUCT_TABLE;
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient();
+// const { DynamoDbClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 
 app.use(express.json());
 
@@ -59,6 +61,81 @@ app.post("/users", async function (req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Could not create user" });
+  }
+});
+
+app.post("/product", async function (req, res) {
+  const { productId, name, quantity } = req.body;
+  if (typeof productId !== "string") {
+    res.status(400).json({ error: '"productId" must be a string' });
+  } else if (typeof name !== "string") {
+    res.status(400).json({ error: '"name" must be a string' });
+  } else if (typeof quantity !== "number") {
+    res.status(400).json({ error: '"quantity" must be a number'});
+  }
+
+  const params = {
+    TableName: PRODUCT_TABLE,
+    Item: {
+      productId: productId,
+      name: name,
+      quantity: quantity,
+    },
+  };
+
+  try {
+    await dynamoDbClient.put(params).promise();
+    res.json({ productId, name, quantity });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Could not create product" });
+  }
+});
+
+app.get("/product/:productId", async function (req, res) {
+  const params = {
+    TableName: PRODUCT_TABLE,
+    Key: {
+      productId: req.params.productId,
+    },
+  };
+
+  try {
+    const { Item } = await dynamoDbClient.get(params).promise();
+    if (Item) {
+      const { productId, name, quantity } = Item;
+      res.json({ productId, name, quantity });
+    } else {
+      res
+        .status(404)
+        .json({ error: 'Could not find product with provided "productId"' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Could not retreive product" });
+  }
+});
+
+app.get("/allProduct/", async function (req, res) {
+  const params = {
+    TableName: PRODUCT_TABLE,
+  };
+
+  try {
+    const items = await dynamoDbClient.scan(params).promise()
+    if (items) {
+         res.setHeader('Access-Control-Allow-Origin', '*');
+         res.json({ "body": JSON.stringify(items.Items)});
+    } else {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res
+        .status(404)
+        .json({ error: 'Could not find product with provided "productId"' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ error: "Could not retreive product" });
   }
 });
 
