@@ -29,7 +29,7 @@ import React from 'react';
 class GetProducts extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {products: []};
+        this.state = {products: [], count:0};
     }
 
 
@@ -45,20 +45,24 @@ class GetProducts extends React.Component {
 
     render() {
         const products = this.state.products;
+        //const counts = this.state.counts;
         return (    
             <section className="section is-large">
+                {/* <a href="#" className="button" onClick={() => console.log(this.state.count+=1)}>
+                    {this.state.count}
+                </a> */}
                 <h1 className="title">Fresh Products!!!</h1>
                 <div className="columns is-mobile is-multiline">
                     {products.map(product => 
                         <div className="column is-one-quarter">
                             <div className="card has-background-link-light">
-                                <header class="card-header">
-                                    <p class="card-header-title is-centered">
+                                <header className="card-header">
+                                    <p className="card-header-title is-centered">
                                     {product.name}
                                     </p>
                                 </header>
-                                <div class="card-content">
-                                    <div class="content">
+                                <div className="card-content">
+                                    <div className="content">
                                         quantity: {product.quantity}
                                     </div>
                                 </div>

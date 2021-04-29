@@ -25,14 +25,14 @@ function Markets(props) {
                 <div className="columns is-mobile">
                 <div className="column">
                     <div className="card m3">
-                    <h2 className="title">Roosevelt Island Market</h2>
+                    <h2 className="title">Central Park Market</h2>
                     <h3 className="subtitle">New York, NY</h3>
                     <img src={centralPark} />
                     </div>
                 </div>
                 <div className="column">
                     <div className="card m4">
-                    <h2 className="title">Roosevelt Island Market</h2>
+                    <h2 className="title">Washington Square Park Market</h2>
                     <h3 className="subtitle">Washington Square, New York, NY 10012</h3>
                     <img src={washingtonPark} />
                     </div>
