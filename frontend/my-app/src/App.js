@@ -4,6 +4,7 @@ import Home from './Home'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import React, { useEffect, useState } from 'react'
+import Product from './Product'
 
 // Configure Firebase.
 var firebaseConfig = {
@@ -14,12 +15,6 @@ var firebaseConfig = {
   messagingSenderId: "649131193269",
   appId: "1:649131193269:web:2e744c7f13a5a2fefd1ffc"
 };
-
-if (!firebase.apps.length) {
-   firebase.initializeApp(firebaseConfig);
-}else {
-   firebase.app(); // if already initialized, use that one
-}
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -34,6 +29,12 @@ const uiConfig = {
     signInSuccessWithAuthResult: () => false,
   },
 };
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
@@ -66,7 +67,8 @@ function App() {
         </div>
         <div>
           <p>Please sign-in:</p>
-          <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+
         </div>
           
     </div>
@@ -84,34 +86,12 @@ function App() {
       
       </section>
       <Markets />
+      {/* <Product /> */}
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in with email: {firebase.auth().currentUser.email}</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
     </div>
 
   );
-
-  // return (
-    
-  //   <div className="App">
-  //     <section className="hero is-danger">
-  //       <div className="hero-body">
-  //         <div className="container">
-  //           <h1 className="title is-1">Vendor</h1>
-  //           <h2 className="subtitle">Shop anywhere</h2>
-  //         </div>
-  //       </div>
-      
-  //     </section>
-  //     {/* <Markets /> */}
-  //     <div className="slideShow">
-  //       <Home />
-  //     </div>
-  //     <div>
-  //     <h2 className="title">Check out our slides for details</h2>
-  //     </div>
-        
-  //   </div>
-  // );
 }
 
 export default App;
