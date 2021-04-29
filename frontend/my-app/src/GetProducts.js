@@ -50,9 +50,18 @@ class GetProducts extends React.Component {
                 <h1 className="title">Fresh Products!!!</h1>
                 <div className="columns is-mobile is-multiline">
                     {products.map(product => 
-                        <div className="column is-one-quarter is-danger">
+                        <div className="column is-one-quarter">
                             <div className="card has-background-link-light">
-                                <div>{product.name}: quantity {product.quantity}</div>
+                                <header class="card-header">
+                                    <p class="card-header-title is-centered">
+                                    {product.name}
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        quantity: {product.quantity}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
