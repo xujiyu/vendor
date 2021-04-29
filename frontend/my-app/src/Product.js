@@ -1,17 +1,17 @@
 
 
 function Product(props) {
-    var state = {
-        products: null
-    }
+    var state
 
     async function getProducts() {
-        const response = await fetch('<https://f8ss6kguxg.execute-api.us-east-1.amazonaws.com/dev/allProduct/>');
-        const products = await response.json();
+        fetch('https://f8ss6kguxg.execute-api.us-east-1.amazonaws.com/dev/allProduct/')
+        .then(response => response.json())
+        .then(data => {
+            state = data['body'];
+            console.log(state);
+        });
         // save it to your components state so you can use it during render
-        //this.setState({products: products});
-        console.log("wtf");
-        console.log(products);
+        // console.log(state);
     }
     getProducts();
     

@@ -4,7 +4,7 @@ import Home from './Home'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import React, { useEffect, useState } from 'react'
-import Product from './Product'
+import GetProducts from './GetProducts'
 
 // Configure Firebase.
 var firebaseConfig = {
@@ -59,9 +59,7 @@ function App() {
           </div>
         
         </section>
-        {/* <Markets /> */}
         <Home />
-        <Product />
         
         <div>
         <h2 className="title">Check out our slides for details</h2>
@@ -87,7 +85,7 @@ function App() {
       
       </section>
       <Markets />
-      <Product />
+      <GetProducts />
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in with email: {firebase.auth().currentUser.email}</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
     </div>
