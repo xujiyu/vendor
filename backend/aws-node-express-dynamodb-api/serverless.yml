@@ -61,7 +61,7 @@ resources:
       Type: AWS::DynamoDB::Table 
       Properties:
         AttributeDefinitions:
-          - AttributeName: productId
+          - AttributeName: productName
             AttributeType: S
         KeySchema:
           - AttributeName: productId

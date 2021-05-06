@@ -5,6 +5,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import React, { useEffect, useState } from 'react'
 import GetProducts from './GetProducts'
+import Banner from './Banner'
+import ShopPage from './ShopPage'
 
 // Configure Firebase.
 var firebaseConfig = {
@@ -37,6 +39,9 @@ if (!firebase.apps.length) {
 }
 
 function App() {
+  const [isVendor, setIsVendor] = useState(false);
+  // useEffect()
+
   const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
 
   // Listen to the Firebase Auth state and set the local state.
@@ -50,7 +55,7 @@ function App() {
   if (!isSignedIn) {
     return (
       <div className="App">
-        <section className="hero is-danger">
+        <section className={isVendor ? "hero is-link" : "hero is-danger"} onClick={() => {setIsVendor(!isVendor);console.log(!!isVendor);}}>
           <div className="hero-body">
             <div className="container">
               <h1 className="title is-1">Vendor</h1>
@@ -59,33 +64,37 @@ function App() {
           </div>
         
         </section>
+
         <Home />
         
         <div>
-        <h2 className="title">Check out our slides for details</h2>
+          <h2 className="title">Check out our presentation for details</h2>
         </div>
         <div>
           <p>Please sign-in:</p>
           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-
         </div>
           
     </div>
     );
   }
+  // if user is signed in
   return (
     <div className="App">
-      <section className="hero is-danger">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title is-1">Vendor</h1>
-            <h2 className="subtitle">Shop anywhere</h2>
-          </div>
-        </div>
       
-      </section>
+      <section className="hero is-danger">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title is-1">Vendor</h1>
+              <h2 className="subtitle">Shop anywhere</h2>
+            </div>
+          </div>
+        
+        </section>
+
       <Markets />
       <GetProducts />
+
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in with email: {firebase.auth().currentUser.email}</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
     </div>

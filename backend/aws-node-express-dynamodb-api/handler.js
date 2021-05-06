@@ -122,7 +122,7 @@ app.get("/allProduct/", async function (req, res) {
   };
 
   try {
-    const items = await dynamoDbClient.scan(params).promise()
+    const items = await dynamoDbClient.scan(params).promise();
     if (items) {
          res.setHeader('Access-Control-Allow-Origin', '*');
          res.json({ "body": JSON.stringify(items.Items)});
@@ -138,6 +138,42 @@ app.get("/allProduct/", async function (req, res) {
     res.json({ error: "Could not retreive product" });
   }
 });
+
+app.get("/removeAllProduct/", async function (req, res) {
+  const params = {
+    TableName: PRODUCT_TABLE,
+  };
+
+  try {
+    const items = await dynamoDbClient.scan(params).promise();
+    if (items) {
+      for (item of items.Items) {
+        const params2 = {
+          TableName: PRODUCT_TABLE,
+          Key: {
+            productId: item['productId'],
+          },
+        };
+        await dynamoDbClient.delete(params2).promise();
+        
+      }
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.json({"body": JSON.stringify(items.Items)});
+    } else {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res
+        .status(404)
+        .json({ error: 'Could not find product with provided "productId"' });
+    }
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ error: "Could not remove all product" });
+  }
+});
+
+
 
 
 app.use((req, res, next) => {
