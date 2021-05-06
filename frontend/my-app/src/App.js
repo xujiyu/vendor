@@ -52,6 +52,21 @@ function App() {
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
+  function inventoryPage(){
+    if (isVendor) {
+      return <ShopPage />;
+    }
+    else {
+      return (
+        <div>
+          <Markets />
+          <GetProducts />
+        </div>
+        
+      );
+    }
+  }
+
   if (!isSignedIn) {
     return (
       <div className="App">
@@ -59,7 +74,7 @@ function App() {
           <div className="hero-body">
             <div className="container">
               <h1 className="title is-1">Vendor</h1>
-              <h2 className="subtitle">Shop anywhere</h2>
+              <h2 className="subtitle">{isVendor ? 'Inventory Page' : 'Shop anywhere'}</h2>
             </div>
           </div>
         
@@ -82,18 +97,18 @@ function App() {
   return (
     <div className="App">
       
-      <section className="hero is-danger">
+      <section className={isVendor ? "hero is-link" : "hero is-danger"} onClick={() => {setIsVendor(!isVendor);console.log(!!isVendor);}}>
           <div className="hero-body">
             <div className="container">
               <h1 className="title is-1">Vendor</h1>
-              <h2 className="subtitle">Shop anywhere</h2>
+              <h2 className="subtitle">{isVendor ? <span>Inventory Page</span> : <span>Shop anywhere</span>}</h2>
             </div>
           </div>
         
         </section>
-
-      <Markets />
-      <GetProducts />
+      {inventoryPage()}
+      {/* <Markets />
+      <GetProducts /> */}
 
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in with email: {firebase.auth().currentUser.email}</p>
       <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
