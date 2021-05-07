@@ -18,7 +18,7 @@ function ShopPage(props) {
         .then(response => response.json())
         .then(data => {
             data = JSON.parse(data['body']);
-            console.log(data);
+            // console.log(data);
             setProducts(data);
         });
     },[random]);
@@ -47,7 +47,7 @@ function ShopPage(props) {
         .then(response => response.json())
         .then(data => {
             data = JSON.parse(data['quantity'])
-            console.log(data);
+            // console.log(data);
         })
         .then(() => reRender());
     }
@@ -56,7 +56,7 @@ function ShopPage(props) {
         fetch('https://f8ss6kguxg.execute-api.us-east-1.amazonaws.com/dev/removeAProduct/'+productId)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             if (data.isSuccess === "true") {
                 reRender();
             }
