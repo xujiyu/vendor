@@ -21,7 +21,7 @@ class GetProducts extends React.Component {
         const products = this.state.products;
         const count = this.state.count;
         return (    
-            <section className="section is-large">
+            <section id="product-section" className="section is-large">
                 <h1 className="title">Fresh Products!!!</h1>
                 <div className="columns is-mobile is-multiline">
                     {products.map((product, index) => 
