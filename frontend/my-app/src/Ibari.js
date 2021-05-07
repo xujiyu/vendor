@@ -17,7 +17,7 @@ function Ibari(props) {
                     <div className="farm1">
                     <h3 className="title"></h3>
                     <h4 className="subtitle">Shea Butter</h4>
-                    <img src={shea} width="250" height="100" />
+                    <img src={shea} width="220" height="100" />
                     <p> IN STOCK</p>
                     </div>
                 </div>
@@ -25,7 +25,7 @@ function Ibari(props) {
                     <div className="farm2">
                     <h3 className="title"></h3>
                     <h4 className="subtitle">Organic Black Soap</h4>
-                    <img src={blacksoap} width="250" height="100"/>
+                    <img src={blacksoap} width="220" height="100"/>
                     <p> IN STOCK - Limited Supply </p>
                     </div>
                 </div>
