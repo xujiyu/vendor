@@ -22,9 +22,6 @@ class GetProducts extends React.Component {
         const count = this.state.count;
         return (    
             <section className="section is-large">
-                <a className="button" onClick={() => this.setState({count: count+1})}>
-                    hi{this.state.count}
-                </a>
                 <h1 className="title">Fresh Products!!!</h1>
                 <div className="columns is-mobile is-multiline">
                     {products.map((product, index) => 
