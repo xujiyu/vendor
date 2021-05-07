@@ -12,7 +12,7 @@
     "bulma": "^0.9.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^4.0.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -38,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-dev-utils": "^11.0.4"
   }
 }
