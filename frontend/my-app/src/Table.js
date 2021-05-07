@@ -10,6 +10,7 @@ export default function Table({ columns, data }) {
     headerGroups,
     rows,
     prepareRow,
+    state,
     setFilter
   } = useTable(
     {

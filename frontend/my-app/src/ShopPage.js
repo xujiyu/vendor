@@ -9,6 +9,7 @@ import us from './vendor-logo.PNG';
 import "./ShopPage.css";
 
 import Table from "./Table";
+import InventoryForm from "./InventoryForm";
 function ShopPage(props) {
     const Status = ({ value }) => {
         // Loop through the array and create a badge-like component instead of a comma-separated string
@@ -18,18 +19,23 @@ function ShopPage(props) {
       
         );
       };
+      function handleChange(e) {
+        console.log(e.target.value);
+      }
+
       const NumericalInput = props => {
         console.log("NumericalInput", props);
         const { column, row, cell, updateData } = props;
         const onChange = e => updateData(row.index, column.id, e.target.value);
-        return <input type="number" value={cell.value} onChange={onChange} />;
+        return <input type="number" value={cell.value} onChange={handleChange} />;
       };
  
+
       const StringInput = props => {
         console.log("StringInput", props);
         const { column, row, cell, updateData } = props;
         const onChange = e => updateData(row.index, column.id, e.target.value);
-        return <input type="string" value={cell.value} onChange={onChange} />;
+        return <input type="string" value={cell.value} onChange={handleChange} />;
       };
 
       const columns = useMemo(
@@ -177,13 +183,17 @@ function ShopPage(props) {
     //   const tableSum = rows.reduce((sum, row) => sum + row.values.total, 0);
     //   console.log("setAmountDue", tableSum);
     //   setAmountDue(tableSum);
-    return(
+
+
+      return(
         <div className="Shop">
         <img src={logo} width="150" height="100"/>
      
         <center> <h1>Welcome Back </h1> <h1color> Restoration Farms </h1color> </center>
         <table> 
         <Table columns={columns} data={data} />
+        {/* <InventoryForm />, */}
+
         <tbody>
           <tr>
             <td colSpan={3}>
@@ -196,10 +206,8 @@ function ShopPage(props) {
             </td>
           </tr>
         </tbody>
-
-
         </table>
-
+        
         <br></br>
   
         <br></br>
