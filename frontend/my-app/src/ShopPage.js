@@ -31,6 +31,10 @@ function ShopPage(props) {
         else if (operation === "minus") {
             data_copy.quantity === 0 ? data_copy.quantity = 0 : data_copy.quantity -= 1;
         }
+        else if (operation === "new") {
+            // no-op
+            data_copy.quantity = data_copy.quantity;
+        }
         const url = 'https://f8ss6kguxg.execute-api.us-east-1.amazonaws.com/dev/product';
         fetch(url, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -68,7 +72,7 @@ function ShopPage(props) {
                         <div className="card has-background-link-light">
                             <header className="card-header">
                                 <p className="card-header-title is-centered">
-                                    {product.name}
+                                    {product.name} : id{product.productId}
                                 </p>
                             </header>
                             <div className="card-content">
@@ -92,6 +96,35 @@ function ShopPage(props) {
                         </div>
                     </div>
                 )}
+                {/* Card view for adding new item */}
+                <div className="column is-one-quarter">
+                    <div className="card has-background-link-light">
+                        <header className="card-header">
+                            <p className="card-header-title is-centered">
+                                <input type="text" id="newItemName"/>
+                            </p>
+                        </header>
+                        <div className="card-content">
+                            <div className="content">
+                                quantity: <input type="text" id="newItemQuantity"/>
+                                <br></br>
+                                price: <input type="text" id="newItemPrice"/>
+                                <br></br>
+                                id: <input type="text" id="newItemId"/>
+                            </div>
+                        </div>
+                        <footer className="card-footer">
+                            <a href="#" onClick={() => {
+                                    modifyQuantity({"name": document.getElementById("newItemName").value,
+                                     "productId": document.getElementById("newItemId").value,
+                                     "quantity": parseInt(document.getElementById("newItemQuantity").value),
+                                     "price": parseFloat(document.getElementById("newItemPrice").value)}, "new");
+                                }} className="card-footer-item">
+                                Add Item
+                            </a>
+                        </footer>
+                    </div>
+                </div>
             </div>
             
         </section>
