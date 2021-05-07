@@ -3,8 +3,20 @@ import hoboken from './hoboken.jpg'
 import ibari from './ibari.jpg'
 import wengerd from './wengerd.jpg'
 import vesco from './vesco.jpg'
+import Ibari from './Ibari.js'
+import React, {useState } from 'react'
 
 function RooseveltFarms(props) {
+    const [clickIbari, setclickIbari] = useState(false);
+    function IbariPage(){
+        if (clickIbari) {
+          return (
+            <div>
+            <Ibari />
+          </div>
+          );
+        }
+      }
     return(
         <div>
 
@@ -24,7 +36,7 @@ function RooseveltFarms(props) {
                     <p> Try their signature Vodka sauce today!</p>
                     </div>
                 </div>
-                <div className="column">
+                <div className="column"onClick={() => {setclickIbari(!clickIbari);console.log(!!clickIbari);}}>
                     <div className="farm2">
                     <h3 className="title">Ibari African Art Store</h3>
                     <h4 className="subtitle"></h4>
@@ -46,7 +58,7 @@ function RooseveltFarms(props) {
                      <p>Look no further...Vesco Pickles to the rescue!</p>
                     </div>
                 </div> 
-
+            {IbariPage()}
             </div>
          </div>
     );
