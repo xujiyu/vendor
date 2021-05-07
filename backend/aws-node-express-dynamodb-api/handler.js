@@ -64,14 +64,17 @@ app.post("/users", async function (req, res) {
   }
 });
 
+// add a single product / update existing product
 app.post("/product", async function (req, res) {
-  const { productId, name, quantity } = req.body;
+  const { productId, name, quantity, price } = req.body;
   if (typeof productId !== "string") {
     res.status(400).json({ error: '"productId" must be a string' });
   } else if (typeof name !== "string") {
     res.status(400).json({ error: '"name" must be a string' });
   } else if (typeof quantity !== "number") {
     res.status(400).json({ error: '"quantity" must be a number'});
+  } else if (typeof price !== "number") {
+    res.status(400).json({ error: '"price" must be a number'});
   }
 
   const params = {
@@ -80,18 +83,23 @@ app.post("/product", async function (req, res) {
       productId: productId,
       name: name,
       quantity: quantity,
+      price: price,
     },
   };
 
   try {
     await dynamoDbClient.put(params).promise();
-    res.json({ productId, name, quantity });
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ productId, name, quantity, price });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Could not create product" });
+    res.status(500).setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ error: "Could not create product" });
   }
 });
 
+
+// get info of one existing product
 app.get("/product/:productId", async function (req, res) {
   const params = {
     TableName: PRODUCT_TABLE,
@@ -103,19 +111,24 @@ app.get("/product/:productId", async function (req, res) {
   try {
     const { Item } = await dynamoDbClient.get(params).promise();
     if (Item) {
-      const { productId, name, quantity } = Item;
-      res.json({ productId, name, quantity });
+      const { productId, name, quantity, price } = Item;
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.json({ productId, name, quantity, price });
     } else {
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res
         .status(404)
         .json({ error: 'Could not find product with provided "productId"' });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Could not retreive product" });
+    res.status(500).setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ error: "Could not retreive product" });
   }
 });
 
+
+// get info of all existing product
 app.get("/allProduct/", async function (req, res) {
   const params = {
     TableName: PRODUCT_TABLE,
@@ -139,6 +152,8 @@ app.get("/allProduct/", async function (req, res) {
   }
 });
 
+
+// remove all existing product
 app.get("/removeAllProduct/", async function (req, res) {
   const params = {
     TableName: PRODUCT_TABLE,
@@ -170,6 +185,26 @@ app.get("/removeAllProduct/", async function (req, res) {
     console.log(error);
     res.status(500).setHeader('Access-Control-Allow-Origin', '*');
     res.json({ error: "Could not remove all product" });
+  }
+});
+
+// remove an existing product
+app.get("/removeAProduct/:productId", async function (req, res) {
+  const params = {
+    TableName: PRODUCT_TABLE,
+    Key: {
+      productId: req.params.productId,
+    },
+  };
+
+  try {
+      const {item} = await dynamoDbClient.delete(params).promise();
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.json({isSuccess: "true"});
+  } catch (error) {
+    console.log(error);
+    res.status(500).setHeader('Access-Control-Allow-Origin', '*');
+    res.json({ error: "Could not remove this product" });
   }
 });
 

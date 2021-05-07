@@ -38,6 +38,8 @@ class GetProducts extends React.Component {
                                 <div className="card-content">
                                     <div className="content">
                                         quantity: {product.quantity}
+                                        <br></br>
+                                        price: {product.price}
                                     </div>
                                 </div>
                             </div>
